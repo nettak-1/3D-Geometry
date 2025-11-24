@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея 3D тел</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- ==================== ПОДКЛЮЧЕНИЕ THREE.JS ==================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- ==================== ДЛЯ ЗАГРУЗКИ .GLB ФАЙЛОВ ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+    <!-- ==================== ШАПКА САЙТА ==================== -->
+    <header class="header">
+        <div class="container">
+             <div class="logo-container">
+                 <img src="pict/logo.png" alt="3D Geometry Logo" class="logo-image">
+                 <h1 class="logo">3D Geometry</h1>
+             </div>
+            <nav class="nav">
+                <a href="index.html">Главная</a>
+                <a href="gallery.html" class="active">Галерея</a>
+                <a href="formulas.html">Фигуры</a>
+                <a href="about.html">О проекте</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h2>Галерея геометрических тел</h2>
+            <p>Исследуйте коллекцию трехмерных геометрических фигур. </p>
+            <p>Нажмите на любую карточку для интерактивного 3D просмотра с возможностью вращения и масштабирования.</p> 
+            
+            <!-- ==================== ГАЛЕРЕЯ ФИГУР ==================== -->
+            <div class="gallery-grid">
+                <!-- Фигура 0: Куб -->
+                <div class="gallery-card" data-shape="0">
+                    <h3>Куб</h3>
+                    <div class="card-image">
+                        <img src="pict/kub.png" alt="Куб" class="shape-image">
+                    </div>
+                </div>
+
+                <!-- Фигура 1: Параллелепипед -->
+                <div class="gallery-card" data-shape="1">
+                    <h3>Параллелепипед</h3>
+                    <div class="card-image">
+                        <img src="pict/par.png" alt="Параллелепипед" class="shape-image">
+                    </div>
+                </div>
+                
+                <!-- Фигура 2: Цилиндр -->
+                <div class="gallery-card" data-shape="2">
+                    <h3>Цилиндр</h3>
+                    <div class="card-image">
+                        <img src="pict/cyl.png" alt="Цилиндр" class="shape-image">
+                    </div>
+                </div>
+                
+                <!-- Фигура 3: Пирамида -->
+                <div class="gallery-card" data-shape="3">
+                    <h3>Пирамида</h3>
+                    <div class="card-image">
+                        <img src="pict/pir.png" alt="Пирамида" class="shape-image">
+                    </div>
+                </div>
+
+                <!-- Фигура 4: Конус -->
+                <div class="gallery-card" data-shape="4">
+                    <h3>Конус</h3>
+                    <div class="card-image">
+                        <img src="pict/cons.png" alt="Конус" class="shape-image">
+                    </div>
+                </div>
+
+                <!-- Фигура 5: Сфера -->
+                <div class="gallery-card" data-shape="5">
+                    <h3>Сфера</h3>
+                    <div class="card-image">
+                        <img src="pict/sfer.png" alt="Сфера" class="shape-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ==================== МОДАЛЬНОЕ ОКНО 3D ПРОСМОТРА ==================== -->
+    <div id="modal-viewer" class="modal-viewer hidden">
+        <div class="modal-header">
+            <div class="model-info">
+                <span id="current-model-name">Выберите фигуру</span>
+            </div>
+            <div class="controls-info">
+                <span>🖱️ ЛКМ - вращение | 🖱️ ПКМ - перемещение | 🖱️ Колесо - масштаб</span>
+            </div>
+            <button id="close-modal" class="close-modal-btn">✕ Закрыть</button>
+        </div>
+        <div id="modal-viewer-content" class="modal-viewer-content"></div>
+        <div id="loading-indicator" class="loading-indicator hidden">
+            <div class="loading-spinner"></div>
+            <p>Загрузка модели...</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 3D Geometry Project</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== КОНФИГУРАЦИЯ 3D ФИГУР ====================
+        const shapesConfig = {
+            '0': { 
+                type: 'glb',
+                path: 'models/cube.glb',
+                name: 'Куб'
+            },
+            '1': {
+                type: 'glb',
+                path: 'models/parallelepiped.glb',
+                name: 'Параллелепипед'
+            },
+            '2': { 
+                type: 'glb',
+                path: 'models/cylinder.glb',
+                name: 'Цилиндр'
+            },
+            '3': { 
+                type: 'glb',
+                path: 'models/pyramid.glb',
+                name: 'Пирамида'
+            },
+            '4': { 
+                type: 'glb',
+                path: 'models/cone.glb',
+                name: 'Конус'
+            },
+            '5': { 
+                type: 'glb',
+                path: 'models/sphere.glb',
+                name: 'Сфера'
+            }
+        };
+
+        // ==================== ОТЛАДОЧНАЯ ИНФОРМАЦИЯ ====================
+        console.log('=== 3D Gallery Debug Info ===');
+        console.log('GLTFLoader available:', typeof THREE.GLTFLoader !== 'undefined');
+        console.log('Shapes config:', shapesConfig);
+        console.log('Three.js version:', THREE.REVISION);
+
+        // ==================== ПЕРЕМЕННЫЕ И ЭЛЕМЕНТЫ DOM ====================
+        const modalViewer = document.getElementById('modal-viewer');
+        const modalViewerContent = document.getElementById('modal-viewer-content');
+        const closeModalBtn = document.getElementById('close-modal');
+        const galleryCards = document.querySelectorAll('.gallery-card');
+
+        // Three.js переменные
+        let scene, camera, renderer, controls, currentMesh;
+
+        // ==================== ИНИЦИАЛИЗАЦИЯ 3D СЦЕНЫ ====================
+        function init3DViewer() {
+            if (scene) return; // Уже инициализирована
+
+            try {
+                // Создание сцены
+                scene = new THREE.Scene();
+                
+                // ==================== ГРАДИЕНТНЫЙ ФОН ====================
+                const canvas = document.createElement('canvas');
+                canvas.width = 32;
+                canvas.height = 32;
+                const context = canvas.getContext('2d');
+                
+                const gradient = context.createLinearGradient(0, 0, 0, 32);
+                gradient.addColorStop(0, '#e8f4f8');  // Светло-голубой
+                gradient.addColorStop(1, '#f0f0f0');  // Светло-серый
+                
+                context.fillStyle = gradient;
+                context.fillRect(0, 0, 32, 32);
+                
+                const texture = new THREE.CanvasTexture(canvas);
+                scene.background = texture;
+
+                // Настройка камеры
+                camera = new THREE.PerspectiveCamera(75, modalViewerContent.clientWidth / modalViewerContent.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+
+                // Создание рендерера
+                renderer = new THREE.WebGLRenderer({ 
+                    antialias: true,
+                    alpha: true 
+                });
+                renderer.setSize(modalViewerContent.clientWidth, modalViewerContent.clientHeight);
+                renderer.setClearColor(0x000000, 0);
+                modalViewerContent.innerHTML = '';
+                modalViewerContent.appendChild(renderer.domElement);
+
+                // ==================== ОСВЕЩЕНИЕ СЦЕНЫ ====================
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                scene.add(ambientLight);
+
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(5, 5, 5);
+                scene.add(directionalLight);
+
+                const backLight = new THREE.DirectionalLight(0xffffff, 0.4);
+                backLight.position.set(-5, -5, -5);
+                scene.add(backLight);
+
+                // ==================== НАСТРОЙКА УПРАВЛЕНИЯ ====================
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+
+                // ==================== ФУНКЦИЯ АНИМАЦИИ ====================
+                function animate() {
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                // Обработка изменения размера окна
+                window.addEventListener('resize', onWindowResize);
+
+            } catch (error) {
+                console.error('Ошибка инициализации 3D просмотрщика:', error);
+                modalViewerContent.innerHTML = '<div class="error-message">Ошибка загрузки 3D просмотрщика</div>';
+            }
+        }
+
+        // ==================== ОБРАБОТКА ИЗМЕНЕНИЯ РАЗМЕРА ОКНА ====================
+        function onWindowResize() {
+            if (camera && renderer && modalViewerContent.clientWidth > 0 && modalViewerContent.clientHeight > 0) {
+                camera.aspect = modalViewerContent.clientWidth / modalViewerContent.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(modalViewerContent.clientWidth, modalViewerContent.clientHeight);
+            }
+        }
+
+        // ==================== СОЗДАНИЕ 3D ФИГУР ====================
+        function createShape(shapeId) {
+            if (!scene) return;
+
+            // Удаляем предыдущую фигуру
+            if (currentMesh) {
+                scene.remove(currentMesh);
+                cleanupMesh(currentMesh);
+            }
+
+            const config = shapesConfig[shapeId];
+            if (!config) {
+                console.error('Конфигурация для фигуры не найдена:', shapeId);
+                return;
+            }
+
+            // Загружаем GLB модель
+            loadGLBModel(config.path, config);
+        }
+
+        // ==================== ЗАГРУЗКА .GLB МОДЕЛИ ====================
+        function loadGLBModel(modelPath, config) {
+            console.log(`🔄 Загрузка GLB модели: ${config.name} из ${modelPath}`);
+            
+            // Показываем индикатор загрузки
+            showLoadingIndicator(true);
+            
+            const loader = new THREE.GLTFLoader();
+            
+            loader.load(
+                modelPath,
+                // onLoad callback
+                (gltf) => {
+                    showLoadingIndicator(false);
+                    
+                    // Удаляем предыдущую модель
+                    if (currentMesh) {
+                        scene.remove(currentMesh);
+                        cleanupMesh(currentMesh);
+                    }
+                    
+                    currentMesh = gltf.scene;
+                    
+                    // Автоматическое масштабирование
+                    scaleModelToFit(currentMesh);
+                    
+                    // Оптимизация материалов
+                    currentMesh.traverse((child) => {
+                        if (child.isMesh) {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                        }
+                    });
+                    
+                    scene.add(currentMesh);
+                    centerCameraOnObject(currentMesh);
+                    updateModelName(config.name);
+                    
+                    console.log(`✅ Модель "${config.name}" успешно загружена`);
+                },
+                // onProgress callback
+                (xhr) => {
+                    const percentLoaded = xhr.loaded / xhr.total * 100;
+                    console.log(`${config.name}: ${percentLoaded.toFixed(1)}% загружено`);
+                },
+                // onError callback
+                (error) => {
+                    showLoadingIndicator(false);
+                    console.error(`❌ Ошибка загрузки GLB ${config.name}:`, error);
+                    // Создаем резервную фигуру
+                    createFallbackShape(config);
+                }
+            );
+        }
+
+        // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+
+        // Функция масштабирования модели
+        function scaleModelToFit(object) {
+            const box = new THREE.Box3().setFromObject(object);
+            const size = box.getSize(new THREE.Vector3());
+            const maxSize = Math.max(size.x, size.y, size.z);
+            
+            // Масштабируем так, чтобы наибольший размер был ~2 единицы
+            const targetSize = 2;
+            const scale = targetSize / maxSize;
+            object.scale.set(scale, scale, scale);
+        }
+
+        // Функция очистки меша
+        function cleanupMesh(mesh) {
+            if (!mesh) return;
+            
+            mesh.traverse((child) => {
+                if (child.isMesh) {
+                    if (child.geometry) child.geometry.dispose();
+                    if (child.material) {
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach(material => material.dispose());
+                        } else {
+                            child.material.dispose();
+                        }
+                    }
+                }
+            });
+        }
+
+        // Функция создания резервной фигуры
+        function createFallbackShape(config) {
+            console.log(`Создание резервной фигуры: ${config.name}`);
+            
+            let geometry;
+            const colors = {
+                'Куб': 0x3498db,
+                'Параллелепипед': 0xe74c3c,
+                'Цилиндр': 0x2ecc71,
+                'Пирамида': 0x9b59b6,
+                'Конус': 0xf39c12,
+                'Сфера': 0x1abc9c
+            };
+            
+            const color = colors[config.name] || 0x3498db;
+            
+            try {
+                switch (config.name) {
+                    case 'Куб':
+                        geometry = new THREE.BoxGeometry(2, 2, 2);
+                        break;
+                    case 'Параллелепипед':
+                        geometry = new THREE.BoxGeometry(3, 2, 1.5);
+                        break;
+                    case 'Цилиндр':
+                        geometry = new THREE.CylinderGeometry(1, 1, 3, 32);
+                        break;
+                    case 'Пирамида':
+                        geometry = new THREE.ConeGeometry(1.2, 2, 4);
+                        break;
+                    case 'Конус':
+                        geometry = new THREE.ConeGeometry(1.2, 3, 32);
+                        break;
+                    case 'Сфера':
+                        geometry = new THREE.SphereGeometry(1.5, 32, 32);
+                        break;
+                    default:
+                        geometry = new THREE.BoxGeometry(2, 2, 2);
+                }
+
+                const material = new THREE.MeshPhongMaterial({ 
+                    color: color,
+                    shininess: 80,
+                    specular: 0x444444,
+                    transparent: true,
+                    opacity: 0.95
+                });
+
+                currentMesh = new THREE.Mesh(geometry, material);
+                scene.add(currentMesh);
+                centerCameraOnObject(currentMesh);
+                updateModelName(config.name + " (резервная)");
+
+            } catch (error) {
+                console.error('Ошибка создания резервной фигуры:', error);
+            }
+        }
+
+        // Функция проверки существования файлов
+        async function checkModelFiles() {
+            console.log('=== Проверка GLB файлов моделей ===');
+            
+            for (const [key, config] of Object.entries(shapesConfig)) {
+                try {
+                    const response = await fetch(config.path);
+                    console.log(`📁 ${config.name} (${config.path}): ${response.ok ? '✅ НАЙДЕН' : '❌ НЕ НАЙДЕН'}`);
+                } catch (error) {
+                    console.log(`❌ ${config.name}: Ошибка - ${error.message}`);
+                }
+            }
+        }
+
+        // Функции для UI
+        function showLoadingIndicator(show) {
+            const indicator = document.getElementById('loading-indicator');
+            if (indicator) {
+                indicator.classList.toggle('hidden', !show);
+            }
+        }
+
+        function updateModelName(name) {
+            const nameElement = document.getElementById('current-model-name');
+            if (nameElement) {
+                nameElement.textContent = name;
+            }
+        }
+
+        // ==================== ЦЕНТРИРОВАНИЕ КАМЕРЫ НА ОБЪЕКТЕ ====================
+        function centerCameraOnObject(object) {
+            const box = new THREE.Box3().setFromObject(object);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
+            
+            cameraZ *= 1.5; // Отступ от объекта
+            
+            camera.position.set(center.x, center.y, center.z + cameraZ);
+            controls.target.set(center.x, center.y, center.z);
+            controls.update();
+        }
+
+        // ==================== УПРАВЛЕНИЕ МОДАЛЬНЫМ ОКНОМ ====================
+        function showModalViewer(shapeId) {
+            if (!shapesConfig[shapeId]) return;
+
+            modalViewer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            if (!scene) {
+                init3DViewer();
+            }
+            
+            // Небольшая задержка для гарантии отрисовки
+            requestAnimationFrame(() => {
+                createShape(shapeId);
+                onWindowResize();
+            });
+        }
+
+        function hideModalViewer() {
+            modalViewer.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // ==================== НАСТРОЙКА ОБРАБОТЧИКОВ СОБЫТИЙ ====================
+        function setupEventListeners() {
+            // Клик по карточке фигуры
+            galleryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const shapeId = card.dataset.shape;
+                    showModalViewer(shapeId);
+                });
+            });
+
+            // Закрытие модального окна
+            closeModalBtn.addEventListener('click', hideModalViewer);
+
+            // Закрытие по клавише ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modalViewer.classList.contains('hidden')) {
+                    hideModalViewer();
+                }
+            });
+
+            // Закрытие по клику на затемненную область
+            modalViewer.addEventListener('click', (e) => {
+                if (e.target === modalViewer) {
+                    hideModalViewer();
+                }
+            });
+        }
+
+        // ==================== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            checkModelFiles();
+        });
+
+        // ==================== ОЧИСТКА РЕСУРСОВ ====================
+        window.addEventListener('beforeunload', () => {
+            if (renderer) {
+                renderer.dispose();
+            }
+            if (currentMesh) {
+                cleanupMesh(currentMesh);
+            }
+        });
+    </script>
+</body>
+</html>

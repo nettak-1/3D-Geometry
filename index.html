@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Geometry - Главная</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="logo-container">
+                <img src="pict/logo.png" alt="3D Geometry Logo" class="logo-image" 
+                     loading="eager" width="40" height="40">
+                <h1 class="logo">3D Geometry</h1>
+            </div>
+            
+            <nav class="nav" aria-label="Основная навигация">
+                <a href="index.html" class="nav-link active" aria-current="page">Главная</a>
+                <a href="gallery.html" class="nav-link">Галерея</a>
+                <a href="formulas.html" class="nav-link">Фигуры</a>
+                <a href="about.html" class="nav-link">О проекте</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="main" role="main">
+        <div class="container">
+            <!-- Приветственная секция -->
+            <section class="hero" aria-labelledby="hero-title">
+                <h2 id="hero-title">Добро пожаловать в мир трёхмерной геометрии!</h2>
+                <p>Исследуйте мир геометрических тел через интерактивные 3D-модели. Вращайте и изучайте свойства различных фигур.</p>
+            </section>
+            <br><br><br>
+            <!-- Секция с фигурами -->
+            <section class="shapes-preview" aria-labelledby="shapes-title">
+                <h2 id="shapes-title">Геометрические тела</h2>
+                
+                <div class="section-description">
+                    <h4>Изучайте основные трёхмерные фигуры</h4>
+                    <p>В этом разделе представлены основные геометрические тела с их характеристиками. Узнайте о количестве граней, вершин и рёбер каждой фигуры, а также перейдите к подробному изучению свойств и формул.</p>
+                </div>
+                
+                <div class="shapes-grid">
+                    <!-- Куб -->
+                    <div class="card shape-card" tabindex="0" role="button" 
+                         onclick="location.href='formulas.html#cube'">
+                        <div class="image-container">
+                            <img src="pict/kub.png" alt="Куб - правильный многогранник с шестью квадратными гранями" 
+                                 class="uniform-image" loading="lazy"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="loading-placeholder" style="display: none;">Куб</div>
+                        </div>
+                        <h4>Куб</h4>
+                        <div class="body-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Граней:</span>
+                                <span class="stat-value">6</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Вершин:</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Рёбер:</span>
+                                <span class="stat-value">12</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Все грани:</span>
+                                <span class="stat-value">равны</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Углы:</span>
+                                <span class="stat-value">прямые</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Параллелепипед -->
+                    <div class="card shape-card" tabindex="0" role="button" 
+                         onclick="location.href='formulas.html#parallelepiped'">
+                        <div class="image-container">
+                            <img src="pict/par.png" alt="Параллелепипед" 
+                                 class="uniform-image" loading="lazy"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="loading-placeholder" style="display: none;">Параллелепипед</div>
+                        </div>
+                        <h4>Параллелепипед</h4>
+                        <div class="body-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Граней:</span>
+                                <span class="stat-value">6</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Вершин:</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Рёбер:</span>
+                                <span class="stat-value">12</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Грани:</span>
+                                <span class="stat-value">параллельны</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Углы:</span>
+                                <span class="stat-value">прямые</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Цилиндр -->
+                    <div class="card shape-card" tabindex="0" role="button"
+                         onclick="location.href='formulas.html#cylinder'">
+                        <div class="image-container">
+                            <img src="pict/cyl.png" alt="Цилиндр" 
+                                 class="uniform-image" loading="lazy"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="loading-placeholder" style="display: none;">Цилиндр</div>
+                        </div>
+                        <h4>Цилиндр</h4>
+                        <div class="body-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Поверхностей:</span>
+                                <span class="stat-value">3</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Оснований:</span>
+                                <span class="stat-value">2</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Боковых поверхностей:</span>
+                                <span class="stat-value">1</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Основания:</span>
+                                <span class="stat-value">круги</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Высота:</span>
+                                <span class="stat-value">h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Пирамида -->
+                    <div class="card shape-card" tabindex="0" role="button"
+                         onclick="location.href='formulas.html#pyramid'">
+                        <div class="image-container">
+                            <img src="pict/pir.png" alt="Пирамида" 
+                                 class="uniform-image" loading="lazy"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="loading-placeholder" style="display: none;">Пирамида</div>
+                        </div>
+                        <h4>Четырёхугольная пирамида </h4>
+                        <div class="body-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Граней:</span>
+                                <span class="stat-value">5</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Вершин:</span>
+                                <span class="stat-value">5</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Рёбер:</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Основание:</span>
+                                <span class="stat-value">многоугольник</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Боковые:</span>
+                                <span class="stat-value">треугольники</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Конус -->
+                    <div class="card shape-card" tabindex="0" role="button"
+                         onclick="location.href='formulas.html#cone'">
+                        <div class="image-container">
+                            <img src="pict/cons.png" alt="Конус" 
+                                 class="uniform-image" loading="lazy"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="loading-placeholder" style="display: none;">Конус</div>
+                        </div>
+                        <h4>Конус</h4>
+                        <div class="body-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Поверхностей:</span>
+                                <span class="stat-value">2</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Вершин:</span>
+                                <span class="stat-value">1</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Основание:</span>
+                                <span class="stat-value">круг</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Поверхность:</span>
+                                <span class="stat-value">коническая</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Высота:</span>
+                                <span class="stat-value">h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Сфера -->
+                    <div class="card shape-card" tabindex="0" role="button"
+                         onclick="location.href='formulas.html#sphere'">
+                        <div class="image-container">
+                            <img src="pict/sfer.png" alt="Сфера" 
+                                 class="uniform-image" loading="lazy"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="loading-placeholder" style="display: none;">Сфера</div>
+                        </div>
+                        <h4>Сфера</h4>
+                        <div class="body-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Точки:</span>
+                                <span class="stat-value">равноудалены</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Радиус:</span>
+                                <span class="stat-value">R</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Диаметр:</span>
+                                <span class="stat-value">2R</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Поверхность:</span>
+                                <span class="stat-value">изогнутая</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Шар -->
+                    <div class="card shape-card" tabindex="0" role="button"
+                         onclick="location.href='formulas.html#ball'">
+                        <div class="image-container">
+                            <img src="pict/har.png" alt="Шар" 
+                                 class="uniform-image" loading="lazy"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="loading-placeholder" style="display: none;">Шар</div>
+                        </div>
+                        <h4>Шар</h4>
+                        <div class="body-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Радиус:</span>
+                                <span class="stat-value">R</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Ограничен:</span>
+                                <span class="stat-value">сферой</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Тип:</span>
+                                <span class="stat-value">тело вращения</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Галерея -->
+            <section class="gallery-preview" aria-labelledby="gallery-title">
+                <h2 id="gallery-title">Галерея геометрических тел</h2>
+                
+                <div class="section-description">
+                    <h4>Визуализация трёхмерных объектов</h4>
+                    <p>В галерее представлены реалистичные 3D-модели геометрических тел. Исследуйте фигуры под разными углами, изучайте их структуру и визуальные особенности. Каждая модель доступна для интерактивного просмотра.</p>
+                </div>
+                
+                <div class="gallery-grid">
+                    <div class="card gallery-item" onclick="location.href='gallery.html'">
+                        <div class="image-container">
+                            <img src="pict/gallery/cube-3d.png" alt="3D модель куба" class="uniform-image" loading="lazy">
+                        </div>
+                        <div class="gallery-content">
+                            <h4>Куб</h4>
+                        </div>
+                    </div>
+                    <div class="card gallery-item" onclick="location.href='gallery.html'">
+                        <div class="image-container">
+                            <img src="pict/gallery/parallelepiped-3d.png" alt="3D модель параллелепипеда" class="uniform-image" loading="lazy">
+                        </div>
+                        <div class="gallery-content">
+                            <h4>Параллелепипед</h4>
+                        </div>
+                    </div>
+                    <div class="card gallery-item" onclick="location.href='gallery.html'">
+                        <div class="image-container">
+                            <img src="pict/gallery/cylinder-3d.png" alt="3D модель цилиндра" class="uniform-image" loading="lazy">
+                        </div>
+                        <div class="gallery-content">
+                            <h4>Цилиндр</h4>
+                        </div>
+                    </div>
+                    <div class="card gallery-item" onclick="location.href='gallery.html'">
+                        <div class="image-container">
+                            <img src="pict/gallery/pyramid-3d.png" alt="3D модель пирамиды" class="uniform-image" loading="lazy">
+                        </div>
+                        <div class="gallery-content">
+                            <h4>Пирамида</h4>
+                        </div>
+                    </div>
+                    <div class="card gallery-item" onclick="location.href='gallery.html'">
+                        <div class="image-container">
+                            <img src="pict/gallery/cone-3d.png" alt="3D модель конуса" class="uniform-image" loading="lazy">
+                        </div>
+                        <div class="gallery-content">
+                            <h4>Конус</h4>
+                        </div>
+                    </div>
+                    <div class="card gallery-item" onclick="location.href='gallery.html'">
+                        <div class="image-container">
+                            <img src="pict/gallery/sphere-3d.png" alt="3D модель сферы" class="uniform-image" loading="lazy">
+                        </div>
+                        <div class="gallery-content">
+                            <h4>Сфера</h4>
+                        </div>
+                    </div>
+                    <div class="card gallery-item" onclick="location.href='gallery.html'">
+                        <div class="image-container">
+                            <img src="pict/gallery/ball-3d.png" alt="3D модель шара" class="uniform-image" loading="lazy">
+                        </div>
+                        <div class="gallery-content">
+                            <h4>Шар</h4>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p>&copy; 2025 3D Geometry Project</p>
+        </div>
+    </footer>
+
+    <!-- Кнопка наверх -->
+    <button class="scroll-to-top" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+
+    <script>
+        // Плавный скролл наверх
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Показ/скрытие кнопки наверх
+        window.addEventListener('scroll', function() {
+            const scrollBtn = document.querySelector('.scroll-to-top');
+            scrollBtn.style.display = window.pageYOffset > 300 ? 'block' : 'none';
+        });
+
+        // Обработка ошибок изображений
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    const placeholder = this.nextElementSibling;
+                    if (placeholder?.classList.contains('loading-placeholder')) {
+                        this.style.display = 'none';
+                        placeholder.style.display = 'flex';
+                    }
+                });
+            });
+
+            // Обработка клавиатуры для карточек
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('keypress', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
