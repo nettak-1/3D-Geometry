@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фигуры и калькулятор</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+             <div class="logo-container">
+                 <img src="pict/logo.png" alt="3D Geometry Logo" class="logo-image">
+                 <h1 class="logo">3D Geometry</h1>
+             </div>
+            <nav class="nav">
+                <a href="index.html">Главная</a>
+                <a href="gallery.html">Галерея</a>
+                <a href="formulas.html" class="active">Фигуры</a>
+                <a href="about.html">О проекте</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Вкладки -->
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab('formulas-tab')">Фигуры</button>
+                <button class="tab-button" onclick="openTab('calculator-tab')">Калькулятор</button>
+            </div>
+
+            <!-- Вкладка с фигурами -->
+            <div id="formulas-tab" class="tab-content active">
+                <h3>Геометрические тела</h3>
+                
+                <div class="formulas-grid">
+                    <!-- Карточка куба -->
+                    <div class="formula-card" onclick="openModal('cube-modal')">
+                        <div class="card-icon" style="height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <img src="pict/kub.png" alt="Куб" style="width: 70px; height: 70px; object-fit: contain;">
+                        </div>
+                        <h4>Куб</h4>
+                        <p><strong>Объем:</strong> V = a³</p>
+                        <p><strong>Площадь полной поверхности:</strong><br> S = 6a²</p>
+                        <span class="card-hint">Нажмите для подробностей</span>
+                    </div>
+                    
+                    <!-- Карточка параллелепипеда -->
+                    <div class="formula-card" onclick="openModal('parallelepiped-modal')">
+                        <div class="card-icon" style="height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <img src="pict/par.png" alt="Параллелепипеда" style="width: 70px; height: 70px; object-fit: contain;">
+                        </div>
+                        <h4>Параллелепипед</h4>
+                        <p><strong>Объем:</strong> V = a × b × c</p>
+                        <p><strong>Площадь полной поверхности:</strong><br> S = 2(ab + ac + bc)</p>
+                        <span class="card-hint">Нажмите для подробностей</span>
+                    </div>
+                    
+                    <!-- Карточка цилиндра -->
+                    <div class="formula-card" onclick="openModal('cylinder-modal')">
+                        <div class="card-icon" style="height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <img src="pict/cyl.png" alt="Цилиндр" style="width: 70px; height: 70px; object-fit: contain;">
+                        </div>
+                        <h4>Цилиндр</h4>
+                        <p><strong>Объем:</strong> V = πr²h</p>
+                        <p><strong>Площадь полной поверхности:</strong> <br>S = 2πr(r + h)</p>
+                        <span class="card-hint">Нажмите для подробностей</span>
+                    </div>
+                    
+                    <!-- Карточка пирамиды -->
+                    <div class="formula-card" onclick="openModal('pyramid-modal')">
+                        <div class="card-icon" style="height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <img src="pict/pir.png" alt="Пирамида" style="width: 70px; height: 70px; object-fit: contain;">
+                        </div>
+                        <h4>Пирамида</h4>
+                        <p><strong>Объем:</strong> V = (a²h)/3</p>
+                        <p><strong>Площадь полной поверхности:</strong> <br>S = a² + 2al</p>
+                        <span class="card-hint">Нажмите для подробностей</span>
+                    </div>
+                    
+                    <!-- Карточка конуса -->
+                    <div class="formula-card" onclick="openModal('cone-modal')">
+                        <div class="card-icon" style="height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <img src="pict/cons.png" alt="Конус" style="width: 70px; height: 70px; object-fit: contain;">
+                        </div>
+                        <h4>Конус</h4>
+                        <p><strong>Объем:</strong> V = (πr²h)/3</p>
+                        <p><strong>Площадь полной поверхности:</strong><br> S = πr(r + l)</p>
+                        <span class="card-hint">Нажмите для подробностей</span>
+                    </div>
+                    
+                    <!-- Карточка сферы -->
+                    <div class="formula-card" onclick="openModal('sphere-modal')">
+                        <div class="card-icon" style="height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <img src="pict/sfer.png" alt="Сфера" style="width: 70px; height: 70px; object-fit: contain;">
+                        </div>
+                        <h4>Сфера</h4>
+                        <p><strong>Площадь полной поверхности:</strong><br> S = 4πr²</p>
+                        <span class="card-hint">Нажмите для подробностей</span>
+                    </div>
+
+                    <!-- Карточка шара -->
+                    <div class="formula-card" onclick="openModal('ball-modal')">
+                        <div class="card-icon" style="height: 80px; display: flex; justify-content: center; align-items: center;">
+                            <img src="pict/har.png" alt="Шар" style="width: 70px; height: 70px; object-fit: contain;">
+                        </div>
+                        <h4>Шар</h4>
+                        <p><strong>Объем:</strong> V = (4πr³)/3</p>
+                        <span class="card-hint">Нажмите для подробностей</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка с калькулятором -->
+            <div id="calculator-tab" class="tab-content">
+                <div class="calculator-container">
+                    <div class="calculator-form">
+                        <h3>Калькулятор объемов</h3>
+                        
+                        <!-- Выбор фигуры -->
+                        <div class="form-group">
+                            <label>Выберите фигуру:</label>
+                            <select name="figure" id="figureSelect" onchange="toggleFields()">
+                                <option value="cube">Куб</option>
+                                <option value="parallelepiped">Параллелепипед</option>
+                                <option value="cylinder">Цилиндр</option>
+                                <option value="pyramid">Пирамида</option>
+                                <option value="cone">Конус</option>
+                                <option value="sphere">Сфера</option>
+                                <option value="ball">Шар</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Поля для ввода данных -->
+                        <div class="input-fields">
+                            <div class="form-group">
+                                <label id="labelA">Сторона a:</label>
+                                <input type="number" id="inputA" step="0.1" min="0" required>
+                            </div>
+                            
+                            <div class="form-group" id="groupB" style="display: none;">
+                                <label id="labelB">Сторона b:</label>
+                                <input type="number" id="inputB" step="0.1" min="0">
+                            </div>
+                            
+                            <div class="form-group" id="groupC">
+                                <label id="labelC">Высота h:</label>
+                                <input type="number" id="inputC" step="0.1" min="0">
+                            </div>
+                        </div>
+                        
+                        <!-- Кнопка расчета -->
+                        <button type="button" class="calculate-btn" onclick="calculateVolume()">Рассчитать объем</button>
+                        
+                        <!-- Окно вывода результата -->
+                        <div class="result-container">
+                            <h4>Результат:</h4>
+                            <div id="resultOutput" class="result-output">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальные окна для подробной информации -->
+    
+    <!-- Модальное окно куба -->
+    <div id="cube-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cube-modal')">&times;</span>
+            <h3>Куб</h3>
+            <div class="modal-body">
+                <div class="modal-icon" style="flex-shrink: 0; text-align: center;">
+                    <img src="pict/kub.png" alt="Куб" style="width: 150px; height: 150px; object-fit: contain;">
+                </div>
+                <div class="modal-info">
+                    <p><strong>Определение:</strong> Правильный многогранник, все грани которого являются квадратами.</p>
+                    <p><strong>Характеристики:</strong></p>
+                    <ul>
+                        <li>6 граней</li>
+                        <li>8 вершин</li>
+                        <li>12 ребер</li>
+                    </ul>
+                    <p><strong>Формулы:</strong></p>
+                    <ul>
+                        <li>Объем: V = a³</li>
+                        <li>Площадь полной поверхности: <br>S = 6a²</li>
+                        <li>Площадь основания: S = a²</li>
+                        <li>Боковая поверхность: P = 4a²</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно параллелепипеда -->
+    <div id="parallelepiped-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('parallelepiped-modal')">&times;</span>
+            <h3>Параллелепипед</h3>
+            <div class="modal-body">
+                <div class="modal-icon" style="flex-shrink: 0; text-align: center;">
+                    <img src="pict/par.png" alt="Параллелепипед" style="width: 150px; height: 150px; object-fit: contain;">
+                </div>
+                <div class="modal-info">
+                    <p><strong>Определение:</strong> Многогранник с шестью гранями, каждая из которых является параллелограммом.</p>
+                    <p><strong>Характеристики:</strong></p>
+                    <ul>
+                        <li>6 граней</li>
+                        <li>8 вершин</li>
+                        <li>12 ребер</li>
+                    </ul>
+                    <p><strong>Формулы:</strong></p>
+                    <ul>
+                        <li>Объем: V = a × b × c</li>
+                        <li>Площадь полной поверхности: <br>S = 2(ab + ac + bc)</li>
+                        <li>Площадь основания: S = a × b</li>
+                        <li>Боковая поверхность: P = 2(a + b)c</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно цилиндра -->
+    <div id="cylinder-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cylinder-modal')">&times;</span>
+            <h3>Цилиндр</h3>
+            <div class="modal-body">
+                <div class="modal-icon" style="flex-shrink: 0; text-align: center;">
+                    <img src="pict/cyl.png" alt="Цилиндр" style="width: 150px; height: 150px; object-fit: contain;">
+                </div>
+                <div class="modal-info">
+                    <p><strong>Определение:</strong> Геометрическое тело, ограниченное цилиндрической поверхностью и двумя параллельными плоскостями.</p>
+                    <p><strong>Характеристики:</strong></p>
+                    <ul>
+                        <li>2 основания (круги)</li>
+                        <li>1 боковая поверхность</li>
+                        <li>Без вершин</li>
+                    </ul>
+                    <p><strong>Формулы:</strong></p>
+                    <ul>
+                        <li>Объем: V = πr²h</li>
+                        <li>Площадь полной поверхности: <br>S = 2πr(r + h)</li>
+                        <li>Площадь основания: S = πr²</li>
+                        <li>Боковая поверхность: P = 2πrh</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Остальные модальные окна (пирамида, конус, сфера, шар) -->
+    <div id="pyramid-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('pyramid-modal')">&times;</span>
+            <h3>Пирамида</h3>
+            <div class="modal-body">
+                <div class="modal-icon" style="flex-shrink: 0; text-align: center;">
+                    <img src="pict/pir.png" alt="Пирамида" style="width: 150px; height: 150px; object-fit: contain;">
+                </div>
+                <div class="modal-info">
+                    <p><strong>Определение:</strong> Многогранник, основание которого — многоугольник, а остальные грани — треугольники с общей вершиной.</p>
+                    <p><strong>Формулы:</strong></p>
+                    <ul>
+                        <li>Объем: V = (a²h)/3</li>
+                        <li>Площадь полной поверхности: <br>S = a² + 2al</li>
+                        <li>Площадь основания: S = a²</li>
+                        <li>Боковая поверхность: P = 2al</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cone-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cone-modal')">&times;</span>
+            <h3>Конус</h3>
+            <div class="modal-body">
+                <div class="modal-icon" style="flex-shrink: 0; text-align: center;">
+                    <img src="pict/cons.png" alt="Конус" style="width: 150px; height: 150px; object-fit: contain;">
+                </div>
+                <div class="modal-info">
+                    <p><strong>Определение:</strong> Тело, полученное объединением всех лучей, исходящих из одной точки и проходящих через плоскую поверхность.</p>
+                    <p><strong>Формулы:</strong></p>
+                    <ul>
+                        <li>Объем: V = (πr²h)/3</li>
+                        <li>Площадь полной поверхности:<br> S = πr(r + l)</li>
+                        <li>Площадь основания: S = πr²</li>
+                        <li>Боковая поверхность: P = πrl</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sphere-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('sphere-modal')">&times;</span>
+            <h3>Сфера</h3>
+            <div class="modal-body">
+                <div class="modal-icon" style="flex-shrink: 0; text-align: center;">
+                    <img src="pict/sfer.png" alt="Сфера" style="width: 150px; height: 150px; object-fit: contain;">
+                </div>
+                <div class="modal-info">
+                    <p><strong>Определение:</strong> Геометрическое место точек в пространстве, равноудаленных от данной точки.</p>
+                    <p><strong>Формулы:</strong></p>
+                    <ul>
+                        <li>Площадь полной поверхности:<br> S = 4πr²</li>
+                        <li>Диаметр: d = 2r</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ball-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ball-modal')">&times;</span>
+            <h3>Шар</h3>
+            <div class="modal-body">
+                <div class="modal-icon" style="flex-shrink: 0; text-align: center;">
+                    <img src="pict/har.png" alt="Шар" style="width: 150px; height: 150px; object-fit: contain;">
+                </div>
+                <div class="modal-info">
+                    <p><strong>Определение:</strong> Геометрическое тело, ограниченное сферой.</p>
+                    <p><strong>Формулы:</strong></p>
+                    <ul>
+                        <li>Объем: V = (4πr³)/3</li>
+                        <li>Площадь полной поверхности:<br> S = 4πr²</li>
+                        <li>Диаметр: d = 2r</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 3D Geometry Project</p>
+        </div>
+    </footer>
+
+    <script>
+    // Управление вкладками
+    function openTab(tabName) {
+        // Скрываем все вкладки
+        const tabContents = document.getElementsByClassName('tab-content');
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        // Убираем активный класс со всех кнопок
+        const tabButtons = document.getElementsByClassName('tab-button');
+        for (let i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].classList.remove('active');
+        }
+
+        // Показываем выбранную вкладку и активируем кнопку
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Управление модальными окнами
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Закрытие модального окна при клике вне его
+    window.onclick = function(event) {
+        const modals = document.getElementsByClassName('modal');
+        for (let i = 0; i < modals.length; i++) {
+            if (event.target == modals[i]) {
+                modals[i].style.display = 'none';
+            }
+        }
+    }
+
+    // Закрытие модального окна по клавише ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                modals[i].style.display = 'none';
+            }
+        }
+    });
+
+    // Функция для показа/скрытия полей ввода в калькуляторе
+    function toggleFields() {
+        const figure = document.getElementById('figureSelect').value;
+        const groupB = document.getElementById('groupB');
+        const groupC = document.getElementById('groupC');
+        const labelA = document.getElementById('labelA');
+        const labelB = document.getElementById('labelB');
+        const labelC = document.getElementById('labelC');
+        
+        // Сбрасываем все к базовому состоянию
+        groupB.style.display = 'none';
+        groupC.style.display = 'block';
+        
+        // Настраиваем поля в зависимости от фигуры
+        switch (figure) {
+            case 'cube':
+                labelA.textContent = 'Сторона a:';
+                groupC.style.display = 'none';
+                break;
+                
+            case 'parallelepiped':
+                labelA.textContent = 'Длина a:';
+                labelB.textContent = 'Ширина b:';
+                labelC.textContent = 'Высота c:';
+                groupB.style.display = 'block';
+                break;
+                
+            case 'cylinder':
+            case 'cone':
+                labelA.textContent = 'Радиус r:';
+                labelC.textContent = 'Высота h:';
+                break;
+                
+            case 'pyramid':
+                labelA.textContent = 'Сторона основания a:';
+                labelC.textContent = 'Высота h:';
+                break;
+                
+            case 'sphere':
+            case 'ball':
+                labelA.textContent = 'Радиус r:';
+                groupC.style.display = 'none';
+                break;
+        }
+    }
+
+   // Функция форматирования чисел
+function formatNumber(num) {
+    if (Number.isInteger(num)) {
+        return num.toString();
+    } else {
+        // Округляем до 2 знаков после запятой
+        return num.toFixed(2);
+    }
+}
+
+// Функция расчета объема и площадей
+function calculateVolume() {
+    const figure = document.getElementById('figureSelect').value;
+    const a = parseFloat(document.getElementById('inputA').value) || 0;
+    const b = parseFloat(document.getElementById('inputB').value) || 0;
+    const c = parseFloat(document.getElementById('inputC').value) || 0;
+    
+    let baseArea = 0;
+    let lateralArea = 0;
+    let totalArea = 0;
+    let volume = 0;
+    let resultText = '';
+
+    switch (figure) {
+        case 'cube':
+            baseArea = a * a;
+            lateralArea = 4 * a * a;
+            totalArea = 6 * a * a;
+            volume = a * a * a;
+            resultText = `Площадь основания: ${formatNumber(baseArea)}
+Площадь боковой поверхности: ${formatNumber(lateralArea)}
+Площадь полной поверхности: ${formatNumber(totalArea)}
+Объем: ${formatNumber(volume)}`;
+            break;
+            
+        case 'parallelepiped':
+            baseArea = a * b;
+            lateralArea = 2 * (a + b) * c;
+            totalArea = 2 * (a*b + a*c + b*c);
+            volume = a * b * c;
+            resultText = `Площадь основания: ${formatNumber(baseArea)}
+Площадь боковой поверхности: ${formatNumber(lateralArea)}
+Площадь полной поверхности: ${formatNumber(totalArea)}
+Объем: ${formatNumber(volume)}`;
+            break;
+            
+        case 'cylinder':
+            baseArea = Math.PI * a * a;
+            lateralArea = 2 * Math.PI * a * c;
+            totalArea = 2 * Math.PI * a * (a + c);
+            volume = Math.PI * a * a * c;
+            resultText = `Площадь основания: ${formatNumber(baseArea)}
+Площадь боковой поверхности: ${formatNumber(lateralArea)}
+Площадь полной поверхности: ${formatNumber(totalArea)}
+Объем: ${formatNumber(volume)}`;
+            break;
+            
+        case 'pyramid':
+            baseArea = a * a;
+            // Для пирамиды боковая площадь - приближенная формула
+            const slantHeight = Math.sqrt((a/2)*(a/2) + c*c);
+            lateralArea = 2 * a * slantHeight;
+            totalArea = baseArea + lateralArea;
+            volume = (a * a * c) / 3;
+            resultText = `Площадь основания: ${formatNumber(baseArea)}
+Площадь боковой поверхности: ${formatNumber(lateralArea)}
+Площадь полной поверхности: ${formatNumber(totalArea)}
+Объем: ${formatNumber(volume)}`;
+            break;
+            
+        case 'cone':
+            baseArea = Math.PI * a * a;
+            const coneSlantHeight = Math.sqrt(a*a + c*c);
+            lateralArea = Math.PI * a * coneSlantHeight;
+            totalArea = baseArea + lateralArea;
+            volume = (Math.PI * a * a * c) / 3;
+            resultText = `Площадь основания: ${formatNumber(baseArea)}
+Площадь боковой поверхности: ${formatNumber(lateralArea)}
+Площадь полной поверхности: ${formatNumber(totalArea)}
+Объем: ${formatNumber(volume)}`;
+            break;
+            
+        case 'sphere':
+            totalArea = 4 * Math.PI * a * a;
+            volume = (4 * Math.PI * a * a * a) / 3;
+            resultText = `Площадь полной поверхности: ${formatNumber(totalArea)}`;
+            break;
+            
+        case 'ball':
+            totalArea = 4 * Math.PI * a * a;
+            volume = (4 * Math.PI * a * a * a) / 3;
+            resultText = `Площадь полной поверхности: ${formatNumber(totalArea)}
+Объем: ${formatNumber(volume)}`;
+            break;
+    }
+
+    document.getElementById('resultOutput').innerHTML = resultText.replace(/\n/g, '<br>');
+}
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleFields();
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея 3D тел</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили для панели элементов */
+        .elements-panel {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: rgba(68, 68, 68, 0.95);
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 100;
+            border: 1px solid #555;
+            width: 280px;
+            color: white;
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(10px);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .elements-panel h3 {
+            margin-top: 0;
+            color: #ADFF2F;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .element-section {
+            margin-bottom: 20px;
+        }
+        
+        .element-section h4 {
+            color: #ADFF2F;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+        
+        .element-list {
+            font-size: 12px;
+            line-height: 1.4;
+            color: #ccc;
+        }
+        
+        .element-item {
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 2px;
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .element-item:hover {
+            background: rgba(173, 255, 47, 0.3);
+            border-color: #ADFF2F;
+            transform: translateY(-2px);
+        }
+        
+        .element-item.highlighted {
+            background: #ADFF2F;
+            color: #2d2d2d;
+            font-weight: bold;
+            border-color: #ADFF2F;
+            box-shadow: 0 0 10px rgba(173, 255, 47, 0.5);
+        }
+
+        .label {
+            position: absolute;
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 10;
+            background: rgba(68, 68, 68, 0.9);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Единый стиль для всех элементов панели */
+        .elements-content {
+            text-align: center;
+        }
+        
+        .elements-content .element-item {
+            margin: 3px;
+            min-width: 40px;
+            text-align: center;
+        }
+    </style>
+    <!-- ==================== ПОДКЛЮЧЕНИЕ THREE.JS ==================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <!-- ==================== ШАПКА САЙТА ==================== -->
+    <header class="header">
+        <div class="container">
+             <div class="logo-container">
+                 <img src="pict/logo.png" alt="3D Geometry Logo" class="logo-image">
+                 <h1 class="logo">3D Geometry</h1>
+             </div>
+            <nav class="nav">
+                <a href="index.html">Главная</a>
+                <a href="gallery.html" class="active">Галерея</a>
+                <a href="formulas.html">Фигуры</a>
+                <a href="about.html">О проекте</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h2>Галерея геометрических тел</h2>
+            <p>Исследуйте коллекцию трехмерных геометрических фигур. </p>
+            <p>Нажмите на любую карточку для интерактивного 3D просмотра с возможностью вращения и масштабирования.</p> 
+            
+            <!-- ==================== ГАЛЕРЕЯ ФИГУР ==================== -->
+            <div class="gallery-grid">
+                <!-- Фигура 0: Куб -->
+                <div class="gallery-card" data-shape="0">
+                    <h3>Куб</h3>
+                    <div class="card-image">
+                        <img src="pict/kub.png" alt="Куб" class="shape-image">
+                    </div>
+                </div>
+
+                <!-- Фигура 1: Параллелепипед -->
+                <div class="gallery-card" data-shape="1">
+                    <h3>Параллелепипед</h3>
+                    <div class="card-image">
+                        <img src="pict/par.png" alt="Параллелепипед" class="shape-image">
+                    </div>
+                </div>
+                
+                <!-- Фигура 2: Цилиндр -->
+                <div class="gallery-card" data-shape="2">
+                    <h3>Цилиндр</h3>
+                    <div class="card-image">
+                        <img src="pict/cyl.png" alt="Цилиндр" class="shape-image">
+                    </div>
+                </div>
+                
+                <!-- Фигура 3: Пирамида -->
+                <div class="gallery-card" data-shape="3">
+                    <h3>Пирамида</h3>
+                    <div class="card-image">
+                        <img src="pict/pir.png" alt="Пирамида" class="shape-image">
+                    </div>
+                </div>
+
+                <!-- Фигура 4: Конус -->
+                <div class="gallery-card" data-shape="4">
+                    <h3>Конус</h3>
+                    <div class="card-image">
+                        <img src="pict/cons.png" alt="Конус" class="shape-image">
+                    </div>
+                </div>
+
+                <!-- Фигура 5: Сфера -->
+                <div class="gallery-card" data-shape="5">
+                    <h3>Сфера</h3>
+                    <div class="card-image">
+                        <img src="pict/sfer.png" alt="Сфера" class="shape-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ==================== МОДАЛЬНОЕ ОКНО 3D ПРОСМОТРА ==================== -->
+    <div id="modal-viewer" class="modal-viewer hidden">
+        <div class="modal-header">
+            <div class="model-info">
+                <span id="current-model-name">Выберите фигуру</span>
+            </div>
+            <div class="controls-info">
+                <span>🖱️ ЛКМ - вращение | 🖱️ ПКМ - перемещение | 🖱️ Колесо - масштаб</span>
+            </div>
+            <button id="close-modal" class="close-modal-btn">✕ Закрыть</button>
+        </div>
+        <div id="modal-viewer-content" class="modal-viewer-content"></div>
+        
+        <!-- Панель элементов фигуры -->
+        <div id="elements-panel" class="elements-panel hidden">
+            <h3>Элементы фигуры</h3>
+            <div id="elements-content" class="elements-content">
+                <!-- Контент будет генерироваться динамически -->
+            </div>
+        </div>
+
+        <div id="loading-indicator" class="loading-indicator hidden">
+            <div class="loading-spinner"></div>
+            <p>Загрузка модели...</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 3D Geometry Project</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== КОНФИГУРАЦИЯ 3D ФИГУР ====================
+        const shapesConfig = {
+            '0': { name: 'Куб', type: 'cube' },
+            '1': { name: 'Параллелепипед', type: 'parallelepiped' },
+            '2': { name: 'Цилиндр', type: 'cylinder' },
+            '3': { name: 'Пирамида', type: 'pyramid' },
+            '4': { name: 'Конус', type: 'cone' },
+            '5': { name: 'Сфера', type: 'sphere' }
+        };
+
+        // ==================== НАСТРОКИ ЦВЕТОВ И ПРОЗРАЧНОСТИ ====================
+        const shapeColors = {
+            'Куб': 0x3498db,          // Синий
+            'Параллелепипед': 0xe74c3c, // Красный
+            'Цилиндр': 0x2ecc71,       // Зеленый
+            'Пирамида': 0x9b59b6,      // Фиолетовый
+            'Конус': 0xf39c12,         // Оранжевый
+            'Сфера': 0x1abc9c          // Бирюзовый
+        };
+        
+        const highlightColors = {
+            'Куб': 0xFFD700,          // Золотой
+            'Параллелепипед': 0x00FFFF, // Голубой
+            'Цилиндр': 0xFF00FF,       // Пурпурный
+            'Пирамида': 0x00FF00,      // Ярко-зеленый
+            'Конус': 0x0000FF,         // Синий
+            'Сфера': 0xFF4500          // Оранжево-красный
+        };
+        
+        const shapeOpacity = 0.7;
+        const HIGHLIGHT_DURATION = 5000;
+        const VERTEX_HIGHLIGHT_SCALE = 1.8;
+        const EDGE_HIGHLIGHT_WIDTH = 8;
+        const EDGE_HIGHLIGHT_SCALE = 2; // Увеличение ребра в 2 раза
+        const FACE_HIGHLIGHT_OPACITY = 0.9;
+        
+        const CAMERA_LIMITS = {
+            minDistance: 2,
+            maxDistance: 50,
+            minZoom: 0.5,
+            maxZoom: 10
+        };
+
+        // ==================== ПЕРЕМЕННЫЕ И ЭЛЕМЕНТЫ DOM ====================
+        const modalViewer = document.getElementById('modal-viewer');
+        const modalViewerContent = document.getElementById('modal-viewer-content');
+        const closeModalBtn = document.getElementById('close-modal');
+        const galleryCards = document.querySelectorAll('.gallery-card');
+        const elementsPanel = document.getElementById('elements-panel');
+        const elementsContent = document.getElementById('elements-content');
+
+        // Three.js переменные
+        let scene, camera, renderer, controls, currentMesh;
+        let vertexObjects = new Map();
+        let edgeObjects = new Map();
+        let faceObjects = new Map();
+        let vertexLabels = [];
+        let currentHighlightedElement = null;
+        let highlightTimeouts = [];
+        let currentShapeName = '';
+
+        // ==================== ИНИЦИАЛИЗАЦИЯ 3D СЦЕНЫ ====================
+        function init3DViewer() {
+            if (scene) return;
+
+            try {
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xf0f0f0);
+
+                camera = new THREE.PerspectiveCamera(75, modalViewerContent.clientWidth / modalViewerContent.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+
+                renderer = new THREE.WebGLRenderer({ 
+                    antialias: true,
+                    alpha: false,
+                    powerPreference: "high-performance"
+                });
+                renderer.setSize(modalViewerContent.clientWidth, modalViewerContent.clientHeight);
+                renderer.setPixelRatio(window.devicePixelRatio);
+                modalViewerContent.innerHTML = '';
+                modalViewerContent.appendChild(renderer.domElement);
+
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                scene.add(ambientLight);
+
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+                directionalLight.position.set(10, 10, 10);
+                scene.add(directionalLight);
+
+                const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+                fillLight.position.set(-10, 5, -10);
+                scene.add(fillLight);
+
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.minDistance = CAMERA_LIMITS.minDistance;
+                controls.maxDistance = CAMERA_LIMITS.maxDistance;
+                controls.minZoom = CAMERA_LIMITS.minZoom;
+                controls.maxZoom = CAMERA_LIMITS.maxZoom;
+                controls.enablePan = true;
+                controls.screenSpacePanning = true;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    updateLabels();
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', onWindowResize);
+
+            } catch (error) {
+                console.error('Ошибка инициализации 3D просмотрщика:', error);
+                modalViewerContent.innerHTML = '<div class="error-message">Ошибка загрузки 3D просмотрщика</div>';
+            }
+        }
+
+        // ==================== ОСНОВНЫЕ ФУНКЦИИ УПРАВЛЕНИЯ ====================
+        function createShape(shapeId) {
+            if (!scene) return;
+            cleanupCurrentShape();
+
+            const config = shapesConfig[shapeId];
+            if (!config) return;
+
+            currentShapeName = config.name;
+            createGeometryShape(config);
+            elementsPanel.classList.remove('hidden');
+        }
+
+        function cleanupCurrentShape() {
+            if (currentMesh) {
+                scene.remove(currentMesh);
+                cleanupMesh(currentMesh);
+                currentMesh = null;
+            }
+
+            // Удаляем контейнеры ребер
+            edgeObjects.forEach(obj => {
+                scene.remove(obj);
+                if (obj.userData.child && obj.userData.child.geometry) {
+                    obj.userData.child.geometry.dispose();
+                    obj.userData.child.material.dispose();
+                }
+            });
+            
+            vertexObjects.forEach(obj => scene.remove(obj));
+            faceObjects.forEach(obj => scene.remove(obj));
+            
+            edgeObjects.clear();
+            vertexObjects.clear();
+            faceObjects.clear();
+
+            vertexLabels.forEach(label => label.element.remove());
+            vertexLabels = [];
+
+            clearAllTimeouts();
+            currentHighlightedElement = null;
+        }
+
+        function clearAllTimeouts() {
+            highlightTimeouts.forEach(timeout => clearTimeout(timeout));
+            highlightTimeouts = [];
+        }
+
+        // ==================== СОЗДАНИЕ ФИГУР ====================
+        function createGeometryShape(config) {
+            console.log(`Создание фигуры: ${config.name}`);
+            
+            try {
+                const color = shapeColors[config.name] || 0x3498db;
+                const baseMaterial = new THREE.MeshPhongMaterial({ 
+                    color: color,
+                    shininess: 60,
+                    specular: 0x222222,
+                    transparent: true,
+                    opacity: shapeOpacity,
+                    side: THREE.DoubleSide
+                });
+
+                switch (config.type) {
+                    case 'cube':
+                        currentMesh = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), baseMaterial);
+                        createCubeElements();
+                        break;
+                    case 'parallelepiped':
+                        currentMesh = new THREE.Mesh(new THREE.BoxGeometry(3, 2, 1.5), baseMaterial);
+                        createParallelepipedElements();
+                        break;
+                    case 'cylinder':
+                        currentMesh = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 3, 32), baseMaterial);
+                        createCylinderElements();
+                        break;
+                    case 'pyramid':
+                        // Используем правильную четырехугольную пирамиду
+                        currentMesh = createFourSidedPyramid(color, shapeOpacity);
+                        createPyramidElements();
+                        break;
+                    case 'cone':
+                        currentMesh = new THREE.Mesh(new THREE.ConeGeometry(1.2, 3, 32), baseMaterial);
+                        createConeElements();
+                        break;
+                    case 'sphere':
+                        currentMesh = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), baseMaterial);
+                        createSphereElements();
+                        break;
+                    default:
+                        currentMesh = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), baseMaterial);
+                        createCubeElements();
+                }
+
+                if (currentMesh) {
+                    scene.add(currentMesh);
+                }
+                centerCameraOnObject(currentMesh);
+                updateModelName(config.name);
+
+            } catch (error) {
+                console.error('Ошибка создания фигуры:', error);
+            }
+        }
+
+        // ==================== ФУНКЦИЯ СОЗДАНИЯ ЧЕТЫРЕХУГОЛЬНОЙ ПИРАМИДЫ ====================
+        function createFourSidedPyramid(color, opacity) {
+            // Создаем правильную четырехугольную пирамиду
+            const baseMaterial = new THREE.MeshPhongMaterial({ 
+                color: color,
+                shininess: 60,
+                specular: 0x222222,
+                transparent: true,
+                opacity: opacity,
+                side: THREE.DoubleSide
+            });
+
+            // Вершины четырехугольной пирамиды:
+            // Основание - квадрат
+            // Вершина S над центром основания
+            const baseSize = 1.5; // Размер основания
+            const height = 2.5;   // Высота пирамиды
+            
+            // Вершины основания
+            const vertices = [
+                // Основание
+                new THREE.Vector3(-baseSize, 0, -baseSize), // A: задний левый
+                new THREE.Vector3(baseSize, 0, -baseSize),  // B: задний правый
+                new THREE.Vector3(baseSize, 0, baseSize),   // C: передний правый
+                new THREE.Vector3(-baseSize, 0, baseSize),  // D: передний левый
+                // Вершина
+                new THREE.Vector3(0, height, 0)             // S: вершина
+            ];
+
+            // Индексы для треугольников (5 граней: 4 боковых + основание)
+            const indices = [
+                // Основание (два треугольника)
+                0, 1, 2, // треугольник A-B-C
+                0, 2, 3, // треугольник A-C-D
+                
+                // Боковые грани
+                0, 1, 4, // грань A-B-S
+                1, 2, 4, // грань B-C-S
+                2, 3, 4, // грань C-D-S
+                3, 0, 4  // грань D-A-S
+            ];
+
+            // Создаем геометрию
+            const geometry = new THREE.BufferGeometry();
+            
+            // Создаем массив вершин
+            const positions = [];
+            vertices.forEach(vertex => {
+                positions.push(vertex.x, vertex.y, vertex.z);
+            });
+            
+            // Устанавливаем атрибуты
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            geometry.setIndex(indices);
+            
+            // Вычисляем нормали для правильного освещения
+            geometry.computeVertexNormals();
+            
+            return new THREE.Mesh(geometry, baseMaterial);
+        }
+
+        // ==================== СОЗДАНИЕ ЭЛЕМЕНТОВ ====================
+        function createCubeElements() {
+            const vertices = {
+                'A': [1, -1, 1], 'B': [1, -1, -1], 'C': [-1, -1, -1], 'D': [-1, -1, 1],
+                'E': [1, 1, 1], 'F': [1, 1, -1], 'G': [-1, 1, -1], 'H': [-1, 1, 1]
+            };
+            createVertices(vertices);
+            createEdges([
+                ['A', 'B'], ['B', 'C'], ['C', 'D'], ['D', 'A'],
+                ['E', 'F'], ['F', 'G'], ['G', 'H'], ['H', 'E'],
+                ['A', 'E'], ['B', 'F'], ['C', 'G'], ['D', 'H']
+            ], vertices);
+            createCubeFaces();
+            createVertexLabels(vertices);
+            generateElementsPanel('cube');
+        }
+
+        function createParallelepipedElements() {
+            const vertices = {
+                'A': [1.5, -1, 0.75], 'B': [1.5, -1, -0.75], 'C': [-1.5, -1, -0.75], 'D': [-1.5, -1, 0.75],
+                'E': [1.5, 1, 0.75], 'F': [1.5, 1, -0.75], 'G': [-1.5, 1, -0.75], 'H': [-1.5, 1, 0.75]
+            };
+            createVertices(vertices);
+            createEdges([
+                ['A', 'B'], ['B', 'C'], ['C', 'D'], ['D', 'A'],
+                ['E', 'F'], ['F', 'G'], ['G', 'H'], ['H', 'E'],
+                ['A', 'E'], ['B', 'F'], ['C', 'G'], ['D', 'H']
+            ], vertices);
+            createParallelepipedFaces();
+            createVertexLabels(vertices);
+            generateElementsPanel('parallelepiped');
+        }
+
+        function createCylinderElements() {
+            const vertices = {
+                'O1': [0, -1.5, 0], 'O2': [0, 1.5, 0],
+                'A': [1, -1.5, 0], 'B': [1, 1.5, 0],
+                'C': [-1, -1.5, 0], 'D': [-1, 1.5, 0]
+            };
+            createVertices(vertices);
+            createEdges([
+                ['O1', 'O2'], ['O1', 'A'], ['O2', 'B'],
+                ['O1', 'C'], ['O2', 'D']
+            ], vertices);
+            createCylinderFaces();
+            createVertexLabels(vertices);
+            generateElementsPanel('cylinder');
+        }
+
+        function createPyramidElements() {
+            // Вершины правильной четырехугольной пирамиды
+            const baseSize = 1.5;
+            const height = 2.5;
+            
+            const vertices = {
+                'A': [-baseSize, 0, -baseSize], // Задний левый
+                'B': [baseSize, 0, -baseSize],  // Задний правый
+                'C': [baseSize, 0, baseSize],   // Передний правый
+                'D': [-baseSize, 0, baseSize],  // Передний левый
+                'S': [0, height, 0]             // Вершина
+            };
+            
+            createVertices(vertices);
+            createEdges([
+                // Ребра основания
+                ['A', 'B'], ['B', 'C'], ['C', 'D'], ['D', 'A'],
+                // Боковые ребра
+                ['A', 'S'], ['B', 'S'], ['C', 'S'], ['D', 'S']
+            ], vertices);
+            createPyramidFaces(vertices);
+            createVertexLabels(vertices);
+            generateElementsPanel('pyramid');
+        }
+
+        function createConeElements() {
+            const vertices = {
+                'O': [0, -1.5, 0], 'S': [0, 1.5, 0],
+                'A': [1.2, -1.5, 0], 'B': [-1.2, -1.5, 0]
+            };
+            createVertices(vertices);
+            createEdges([
+                ['O', 'S'], ['O', 'A'], ['O', 'B'],
+                ['A', 'S'], ['B', 'S']
+            ], vertices);
+            createConeFaces();
+            createVertexLabels(vertices);
+            generateElementsPanel('cone');
+        }
+
+        function createSphereElements() {
+            const vertices = {
+                'O': [0, 0, 0], 'N': [0, 1.5, 0], 'S': [0, -1.5, 0], 'E': [1.5, 0, 0]
+            };
+            createVertices(vertices);
+            createEdges([['N', 'S'], ['O', 'E']], vertices);
+            createSphereFaces();
+            createVertexLabels(vertices);
+            generateElementsPanel('sphere');
+        }
+
+        // ==================== СОЗДАНИЕ КОМПОНЕНТОВ ====================
+        function createVertices(vertices) {
+            const vertexGeometry = new THREE.SphereGeometry(0.08, 12, 12);
+            const vertexMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000, shininess: 100 });
+
+            Object.entries(vertices).forEach(([label, pos]) => {
+                const sphere = new THREE.Mesh(vertexGeometry, vertexMaterial);
+                sphere.position.set(...pos);
+                sphere.userData = { 
+                    type: 'vertex', 
+                    label, 
+                    originalColor: 0xff0000, 
+                    originalScale: new THREE.Vector3(1, 1, 1) 
+                };
+                scene.add(sphere);
+                vertexObjects.set(label, sphere);
+            });
+        }
+
+        function createEdges(edgePairs, vertices) {
+            edgePairs.forEach(pair => {
+                const edgeId = pair.join('');
+                const points = [
+                    new THREE.Vector3(...vertices[pair[0]]),
+                    new THREE.Vector3(...vertices[pair[1]])
+                ];
+                
+                // Создаем геометрию ребра
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                const material = new THREE.LineBasicMaterial({ 
+                    color: 0x000000, 
+                    linewidth: 2 
+                });
+                const edge = new THREE.Line(geometry, material);
+                
+                // Создаем невидимый объект-контейнер для масштабирования
+                const edgeContainer = new THREE.Group();
+                edgeContainer.add(edge);
+                
+                // Вычисляем центр ребра для правильного позиционирования
+                const center = new THREE.Vector3()
+                    .add(points[0])
+                    .add(points[1])
+                    .multiplyScalar(0.5);
+                edgeContainer.position.copy(center);
+                
+                // Вычисляем направления для правильного масштабирования
+                const direction = new THREE.Vector3()
+                    .subVectors(points[1], points[0])
+                    .normalize();
+                
+                // Сохраняем данные для выделения
+                edgeContainer.userData = { 
+                    type: 'edge', 
+                    id: edgeId, 
+                    points: points,
+                    direction: direction,
+                    length: points[0].distanceTo(points[1]),
+                    originalColor: 0x000000, 
+                    originalLinewidth: 2,
+                    child: edge // сохраняем ссылку на линию
+                };
+                
+                // Размещаем линию внутри контейнера
+                edge.position.sub(center);
+                
+                scene.add(edgeContainer);
+                edgeObjects.set(edgeId, edgeContainer);
+            });
+        }
+
+        function createCubeFaces() {
+            const faceMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Куб'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.7,
+                side: THREE.DoubleSide
+            });
+
+            const faceConfigs = [
+                { position: [0, -1, 0], rotation: [Math.PI / 2, 0, 0], id: 'bottom', name: 'Основание' },
+                { position: [0, 1, 0], rotation: [-Math.PI / 2, 0, 0], id: 'top', name: 'Верхняя грань' },
+                { position: [0, 0, 1], rotation: [0, 0, 0], id: 'front', name: 'Передняя грань' },
+                { position: [1, 0, 0], rotation: [0, Math.PI / 2, 0], id: 'right', name: 'Правая грань' },
+                { position: [0, 0, -1], rotation: [0, Math.PI, 0], id: 'back', name: 'Задняя грань' },
+                { position: [-1, 0, 0], rotation: [0, -Math.PI / 2, 0], id: 'left', name: 'Левая грань' }
+            ];
+            
+            faceConfigs.forEach(config => {
+                const face = createPlaneFace(2, 2, config.position, config.rotation, faceMaterial);
+                face.userData = { 
+                    type: 'face', 
+                    id: config.id, 
+                    name: config.name, 
+                    originalColor: shapeColors['Куб'], 
+                    originalOpacity: shapeOpacity * 0.7,
+                    originalScale: new THREE.Vector3(1, 1, 1),
+                    originalPosition: new THREE.Vector3(...config.position)
+                };
+                scene.add(face);
+                faceObjects.set(config.id, face);
+            });
+        }
+
+        function createParallelepipedFaces() {
+            const faceMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Параллелепипед'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.7,
+                side: THREE.DoubleSide
+            });
+
+            const faceConfigs = [
+                { position: [0, -1, 0], rotation: [Math.PI / 2, 0, 0], id: 'bottom', name: 'Нижнее основание', size: [3, 1.5] },
+                { position: [0, 1, 0], rotation: [-Math.PI / 2, 0, 0], id: 'top', name: 'Верхнее основание', size: [3, 1.5] },
+                { position: [0, 0, 0.75], rotation: [0, 0, 0], id: 'front', name: 'Передняя грань', size: [3, 2] },
+                { position: [0, 0, -0.75], rotation: [0, Math.PI, 0], id: 'back', name: 'Задняя грань', size: [3, 2] },
+                { position: [1.5, 0, 0], rotation: [0, Math.PI / 2, 0], id: 'right', name: 'Правая грань', size: [1.5, 2] },
+                { position: [-1.5, 0, 0], rotation: [0, -Math.PI / 2, 0], id: 'left', name: 'Левая грань', size: [1.5, 2] }
+            ];
+            
+            faceConfigs.forEach(config => {
+                const face = createPlaneFace(config.size[0], config.size[1], config.position, config.rotation, faceMaterial);
+                face.userData = { 
+                    type: 'face', 
+                    id: config.id, 
+                    name: config.name, 
+                    originalColor: shapeColors['Параллелепипед'], 
+                    originalOpacity: shapeOpacity * 0.7,
+                    originalScale: new THREE.Vector3(1, 1, 1),
+                    originalPosition: new THREE.Vector3(...config.position)
+                };
+                scene.add(face);
+                faceObjects.set(config.id, face);
+            });
+        }
+
+        function createCylinderFaces() {
+            const baseMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Цилиндр'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.7,
+                side: THREE.DoubleSide
+            });
+
+            // Нижнее основание
+            const bottomBase = new THREE.Mesh(new THREE.CircleGeometry(1, 32), baseMaterial);
+            bottomBase.position.set(0, -1.5, 0);
+            bottomBase.rotation.x = -Math.PI / 2;
+            bottomBase.userData = { 
+                type: 'face', 
+                id: 'base1', 
+                name: 'Нижнее основание', 
+                originalColor: shapeColors['Цилиндр'], 
+                originalOpacity: shapeOpacity * 0.7,
+                originalScale: new THREE.Vector3(1, 1, 1)
+            };
+            scene.add(bottomBase);
+            faceObjects.set('base1', bottomBase);
+
+            // Верхнее основание
+            const topBase = new THREE.Mesh(new THREE.CircleGeometry(1, 32), baseMaterial);
+            topBase.position.set(0, 1.5, 0);
+            topBase.rotation.x = Math.PI / 2;
+            topBase.userData = { 
+                type: 'face', 
+                id: 'base2', 
+                name: 'Верхнее основание', 
+                originalColor: shapeColors['Цилиндр'], 
+                originalOpacity: shapeOpacity * 0.7,
+                originalScale: new THREE.Vector3(1, 1, 1)
+            };
+            scene.add(topBase);
+            faceObjects.set('base2', topBase);
+
+            // Боковая поверхность
+            const sideMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Цилиндр'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.8,
+                side: THREE.DoubleSide
+            });
+            const sideGeometry = new THREE.CylinderGeometry(1, 1, 3, 32, 1, true);
+            const sideFace = new THREE.Mesh(sideGeometry, sideMaterial);
+            sideFace.userData = { 
+                type: 'face', 
+                id: 'side', 
+                name: 'Боковая поверхность', 
+                originalColor: shapeColors['Цилиндр'], 
+                originalOpacity: shapeOpacity * 0.8,
+                originalScale: new THREE.Vector3(1, 1, 1)
+            };
+            scene.add(sideFace);
+            faceObjects.set('side', sideFace);
+        }
+
+        function createPyramidFaces(vertices) {
+            const faceMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Пирамида'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.7,
+                side: THREE.DoubleSide
+            });
+
+            // Боковые грани (треугольники)
+            const sideFaces = [
+                { vertices: ['A', 'B', 'S'], id: 'side1', name: 'Грань ABS' },
+                { vertices: ['B', 'C', 'S'], id: 'side2', name: 'Грань BCS' },
+                { vertices: ['C', 'D', 'S'], id: 'side3', name: 'Грань CDS' },
+                { vertices: ['D', 'A', 'S'], id: 'side4', name: 'Грань DAS' }
+            ];
+
+            sideFaces.forEach(faceConfig => {
+                const points = [
+                    new THREE.Vector3(...vertices[faceConfig.vertices[0]]),
+                    new THREE.Vector3(...vertices[faceConfig.vertices[1]]),
+                    new THREE.Vector3(...vertices[faceConfig.vertices[2]])
+                ];
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                geometry.computeVertexNormals();
+                const face = new THREE.Mesh(geometry, faceMaterial);
+                face.userData = { 
+                    type: 'face', 
+                    id: faceConfig.id, 
+                    name: faceConfig.name, 
+                    originalColor: shapeColors['Пирамида'], 
+                    originalOpacity: shapeOpacity * 0.7,
+                    originalScale: new THREE.Vector3(1, 1, 1)
+                };
+                scene.add(face);
+                faceObjects.set(faceConfig.id, face);
+            });
+
+            // Основание (квадрат из двух треугольников)
+            const basePoints = [
+                new THREE.Vector3(...vertices['A']),
+                new THREE.Vector3(...vertices['B']),
+                new THREE.Vector3(...vertices['C']),
+                new THREE.Vector3(...vertices['D'])
+            ];
+            const baseGeometry = new THREE.BufferGeometry().setFromPoints(basePoints);
+            baseGeometry.setIndex([0, 1, 2, 0, 2, 3]);
+            baseGeometry.computeVertexNormals();
+            const baseFace = new THREE.Mesh(baseGeometry, faceMaterial);
+            baseFace.userData = { 
+                type: 'face', 
+                id: 'base', 
+                name: 'Основание', 
+                originalColor: shapeColors['Пирамида'], 
+                originalOpacity: shapeOpacity * 0.7,
+                originalScale: new THREE.Vector3(1, 1, 1)
+            };
+            scene.add(baseFace);
+            faceObjects.set('base', baseFace);
+        }
+
+        function createConeFaces() {
+            const baseMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Конус'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.7,
+                side: THREE.DoubleSide
+            });
+
+            // Основание
+            const base = new THREE.Mesh(new THREE.CircleGeometry(1.2, 32), baseMaterial);
+            base.position.set(0, -1.5, 0);
+            base.rotation.x = -Math.PI / 2;
+            base.userData = { 
+                type: 'face', 
+                id: 'base', 
+                name: 'Основание', 
+                originalColor: shapeColors['Конус'], 
+                originalOpacity: shapeOpacity * 0.7,
+                originalScale: new THREE.Vector3(1, 1, 1)
+            };
+            scene.add(base);
+            faceObjects.set('base', base);
+
+            // Боковая поверхность
+            const sideMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Конус'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.8,
+                side: THREE.DoubleSide
+            });
+            const sideGeometry = new THREE.ConeGeometry(1.2, 3, 32, 1, true);
+            const sideFace = new THREE.Mesh(sideGeometry, sideMaterial);
+            sideFace.userData = { 
+                type: 'face', 
+                id: 'side', 
+                name: 'Боковая поверхность', 
+                originalColor: shapeColors['Конус'], 
+                originalOpacity: shapeOpacity * 0.8,
+                originalScale: new THREE.Vector3(1, 1, 1)
+            };
+            scene.add(sideFace);
+            faceObjects.set('side', sideFace);
+        }
+
+        function createSphereFaces() {
+            const sphereMaterial = new THREE.MeshPhongMaterial({ 
+                color: shapeColors['Сфера'], 
+                transparent: true, 
+                opacity: shapeOpacity * 0.3,
+                side: THREE.DoubleSide
+            });
+
+            const sphereFace = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), sphereMaterial);
+            sphereFace.userData = { 
+                type: 'face', 
+                id: 'surface', 
+                name: 'Поверхность сферы', 
+                originalColor: shapeColors['Сфера'], 
+                originalOpacity: shapeOpacity * 0.3,
+                originalScale: new THREE.Vector3(1, 1, 1)
+            };
+            scene.add(sphereFace);
+            faceObjects.set('surface', sphereFace);
+        }
+
+        function createPlaneFace(width, height, position, rotation, material) {
+            const geometry = new THREE.PlaneGeometry(width, height);
+            const face = new THREE.Mesh(geometry, material);
+            face.position.set(...position);
+            face.rotation.set(...rotation);
+            return face;
+        }
+
+        function createVertexLabels(vertices) {
+            Object.entries(vertices).forEach(([label, pos]) => {
+                const labelPos = new THREE.Vector3(...pos).multiplyScalar(1.2);
+                const labelElement = document.createElement('div');
+                labelElement.className = 'label';
+                labelElement.textContent = label;
+                labelElement.style.display = 'none';
+                modalViewerContent.appendChild(labelElement);
+                
+                vertexLabels.push({ element: labelElement, position: labelPos, label });
+            });
+        }
+
+        // ==================== ПАНЕЛЬ ЭЛЕМЕНТОВ ====================
+        function generateElementsPanel(shapeType) {
+            const panels = {
+                'cube': `
+                    <div class="element-section">
+                        <h4>Вершины (8):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="vertex" data-id="A">A</span>
+                            <span class="element-item" data-type="vertex" data-id="B">B</span>
+                            <span class="element-item" data-type="vertex" data-id="C">C</span>
+                            <span class="element-item" data-type="vertex" data-id="D">D</span>
+                            <span class="element-item" data-type="vertex" data-id="E">E</span>
+                            <span class="element-item" data-type="vertex" data-id="F">F</span>
+                            <span class="element-item" data-type="vertex" data-id="G">G</span>
+                            <span class="element-item" data-type="vertex" data-id="H">H</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Ребра (12):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="edge" data-id="AB">AB</span>
+                            <span class="element-item" data-type="edge" data-id="BC">BC</span>
+                            <span class="element-item" data-type="edge" data-id="CD">CD</span>
+                            <span class="element-item" data-type="edge" data-id="DA">DA</span>
+                            <span class="element-item" data-type="edge" data-id="EF">EF</span>
+                            <span class="element-item" data-type="edge" data-id="FG">FG</span>
+                            <span class="element-item" data-type="edge" data-id="GH">GH</span>
+                            <span class="element-item" data-type="edge" data-id="HE">HE</span>
+                            <span class="element-item" data-type="edge" data-id="AE">AE</span>
+                            <span class="element-item" data-type="edge" data-id="BF">BF</span>
+                            <span class="element-item" data-type="edge" data-id="CG">CG</span>
+                            <span class="element-item" data-type="edge" data-id="DH">DH</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Грани (6):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="face" data-id="bottom">ABCD</span>
+                            <span class="element-item" data-type="face" data-id="top">FEHG</span>
+                            <span class="element-item" data-type="face" data-id="front">EADH</span><br>
+                            <span class="element-item" data-type="face" data-id="right">FBAE</span>
+                            <span class="element-item" data-type="face" data-id="back">GCBF</span>
+                            <span class="element-item" data-type="face" data-id="left">HDCG</span>
+                        </div>
+                    </div>
+                `,
+                'parallelepiped': `
+                    <div class="element-section">
+                        <h4>Вершины (8):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="vertex" data-id="A">A</span>
+                            <span class="element-item" data-type="vertex" data-id="B">B</span>
+                            <span class="element-item" data-type="vertex" data-id="C">C</span>
+                            <span class="element-item" data-type="vertex" data-id="D">D</span>
+                            <span class="element-item" data-type="vertex" data-id="E">E</span>
+                            <span class="element-item" data-type="vertex" data-id="F">F</span>
+                            <span class="element-item" data-type="vertex" data-id="G">G</span>
+                            <span class="element-item" data-type="vertex" data-id="H">H</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Ребра (12):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="edge" data-id="AB">AB</span>
+                            <span class="element-item" data-type="edge" data-id="BC">BC</span>
+                            <span class="element-item" data-type="edge" data-id="CD">CD</span>
+                            <span class="element-item" data-type="edge" data-id="DA">DA</span>
+                            <span class="element-item" data-type="edge" data-id="EF">EF</span>
+                            <span class="element-item" data-type="edge" data-id="FG">FG</span>
+                            <span class="element-item" data-type="edge" data-id="GH">GH</span>
+                            <span class="element-item" data-type="edge" data-id="HE">HE</span>
+                            <span class="element-item" data-type="edge" data-id="AE">AE</span>
+                            <span class="element-item" data-type="edge" data-id="BF">BF</span>
+                            <span class="element-item" data-type="edge" data-id="CG">CG</span>
+                            <span class="element-item" data-type="edge" data-id="DH">DH</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Грани (6):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="face" data-id="bottom">ABCD</span>
+                            <span class="element-item" data-type="face" data-id="top">HGFE</span>
+                            <span class="element-item" data-type="face" data-id="front">HEAD</span><br>
+                            <span class="element-item" data-type="face" data-id="back">FGCB</span>
+                            <span class="element-item" data-type="face" data-id="right">EFBA</span>
+                            <span class="element-item" data-type="face" data-id="left">GHDC</span>
+                        </div>
+                    </div>
+                `,
+                'cylinder': `
+                    <div class="element-section">
+                        <h4>Элементы:</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="vertex" data-id="O1">O₁</span>
+                            <span class="element-item" data-type="vertex" data-id="O2">O₂</span>
+                            <span class="element-item" data-type="vertex" data-id="A">A</span><br>
+                            <span class="element-item" data-type="vertex" data-id="B">B</span>
+                            <span class="element-item" data-type="vertex" data-id="C">C</span>
+                            <span class="element-item" data-type="vertex" data-id="D">D</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Ребра:</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="edge" data-id="O1O2">Высота</span>
+                            <span class="element-item" data-type="edge" data-id="O1A">Радиус</span>
+                            <span class="element-item" data-type="edge" data-id="O2B">Радиус</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Грани (3):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="face" data-id="base1">Нижнее</span>
+                            <span class="element-item" data-type="face" data-id="base2">Верхнее</span>
+                            <span class="element-item" data-type="face" data-id="side">Боковая</span>
+                        </div>
+                    </div>
+                `,
+                'pyramid': `
+                    <div class="element-section">
+                        <h4>Вершины (5):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="vertex" data-id="A">A</span>
+                            <span class="element-item" data-type="vertex" data-id="B">B</span>
+                            <span class="element-item" data-type="vertex" data-id="C">C</span><br>
+                            <span class="element-item" data-type="vertex" data-id="D">D</span>
+                            <span class="element-item" data-type="vertex" data-id="S">S</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Ребра (8):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="edge" data-id="AB">AB</span>
+                            <span class="element-item" data-type="edge" data-id="BC">BC</span>
+                            <span class="element-item" data-type="edge" data-id="CD">CD</span>
+                            <span class="element-item" data-type="edge" data-id="DA">DA</span>
+                            <span class="element-item" data-type="edge" data-id="AS">AS</span>
+                            <span class="element-item" data-type="edge" data-id="BS">BS</span>
+                            <span class="element-item" data-type="edge" data-id="CS">CS</span>
+                            <span class="element-item" data-type="edge" data-id="DS">DS</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Грани (5):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="face" data-id="base">FBCD</span>
+                            <span class="element-item" data-type="face" data-id="side1">ABS</span>
+                            <span class="element-item" data-type="face" data-id="side2">BCS</span><br>
+                            <span class="element-item" data-type="face" data-id="side3">CDS</span>
+                            <span class="element-item" data-type="face" data-id="side4">DAS</span>
+                        </div>
+                    </div>
+                `,
+                'cone': `
+                    <div class="element-section">
+                        <h4>Элементы:</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="vertex" data-id="O">O</span>
+                            <span class="element-item" data-type="vertex" data-id="S">S</span>
+                            <span class="element-item" data-type="vertex" data-id="A">A</span>
+                            <span class="element-item" data-type="vertex" data-id="B">B</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Ребра:</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="edge" data-id="OS">Высота</span>
+                            <span class="element-item" data-type="edge" data-id="OA">Радиус</span>
+                            <span class="element-item" data-type="edge" data-id="OB">Радиус</span>
+                        </div>
+                    </div>
+                    <div class="element-section">
+                        <h4>Грани (2):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="face" data-id="base">Основание</span>
+                            <span class="element-item" data-type="face" data-id="side">Боковая</span>
+                        </div>
+                    </div>
+                `,
+                'sphere': `
+                    <div class="element-section">
+                        <h4>Элементы:</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="vertex" data-id="O">Центр</span>
+                            <span class="element-item" data-type="vertex" data-id="N">Точка N</span>
+                            <span class="element-item" data-type="vertex" data-id="S">Точка S</span>
+                            <span class="element-item" data-type="vertex" data-id="E">Точка E</span>
+                            <span class="element-item" data-type="edge" data-id="NS">Диаметр</span>
+                            <span class="element-item" data-type="edge" data-id="OE">Радиус</span>
+                        </div>
+                    </div>
+                   
+                    <div class="element-section">
+                        <h4>Поверхность (1):</h4>
+                        <div class="element-list">
+                            <span class="element-item" data-type="face" data-id="surface">Поверхность</span>
+                        </div>
+                    </div>
+                `
+            };
+
+            elementsContent.innerHTML = panels[shapeType] || '';
+            setupElementEventListeners();
+        }
+
+        // ==================== ПОДСВЕТКА ЭЛЕМЕНТОВ ====================
+        function setupElementEventListeners() {
+            clearAllTimeouts();
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.addEventListener('click', (e) => highlightElement(e.target));
+            });
+        }
+
+        function highlightElement(element) {
+            const type = element.dataset.type;
+            const id = element.dataset.id;
+            
+            // Снимаем подсветку со всех элементов в панели
+            document.querySelectorAll('.element-item.highlighted').forEach(item => {
+                item.classList.remove('highlighted');
+            });
+            
+            // Восстанавливаем предыдущий выделенный элемент в 3D сцене
+            if (currentHighlightedElement) {
+                restoreElement(currentHighlightedElement);
+            }
+            
+            // Добавляем подсветку новому элементу в панели
+            element.classList.add('highlighted');
+            
+            // Выделяем элемент в 3D сцене
+            switch(type) {
+                case 'vertex': highlightVertex(id); break;
+                case 'edge': highlightEdge(id); break;
+                case 'face': highlightFace(id); break;
+            }
+        }
+
+        function highlightVertex(vertexId) {
+            const vertex = vertexObjects.get(vertexId);
+            if (vertex) {
+                currentHighlightedElement = {
+                    type: 'vertex',
+                    id: vertexId,
+                    originalColor: vertex.userData.originalColor,
+                    originalScale: vertex.scale.clone()
+                };
+                
+                // Убрано изменение цвета, только увеличение размера
+                vertex.scale.set(VERTEX_HIGHLIGHT_SCALE, VERTEX_HIGHLIGHT_SCALE, VERTEX_HIGHLIGHT_SCALE);
+                
+                highlightTimeouts.push(setTimeout(() => {
+                    restoreElement(currentHighlightedElement);
+                    currentHighlightedElement = null;
+                }, HIGHLIGHT_DURATION));
+            }
+        }
+
+        function highlightEdge(edgeId) {
+            const edgeContainer = edgeObjects.get(edgeId);
+            if (edgeContainer) {
+                const userData = edgeContainer.userData;
+                const edge = userData.child;
+                
+                currentHighlightedElement = {
+                    type: 'edge',
+                    id: edgeId,
+                    edgeContainer: edgeContainer,
+                    originalColor: edge.material.color.getHex(),
+                    originalLinewidth: edge.material.linewidth,
+                    originalScale: edgeContainer.scale.clone()
+                };
+                
+                // Меняем цвет и толщину
+                edge.material.color.set(highlightColors[currentShapeName] || 0xFFA500);
+                edge.material.linewidth = EDGE_HIGHLIGHT_WIDTH;
+                edge.material.needsUpdate = true;
+                
+                // Увеличиваем ребро в 2 раза через масштабирование контейнера
+                // Это сохранит положение ребра на месте
+                edgeContainer.scale.multiplyScalar(EDGE_HIGHLIGHT_SCALE);
+                
+                highlightTimeouts.push(setTimeout(() => {
+                    restoreElement(currentHighlightedElement);
+                    currentHighlightedElement = null;
+                }, HIGHLIGHT_DURATION));
+            }
+        }
+
+        function highlightFace(faceId) {
+            const face = faceObjects.get(faceId);
+            if (face) {
+                currentHighlightedElement = {
+                    type: 'face',
+                    id: faceId,
+                    originalColor: face.userData.originalColor,
+                    originalOpacity: face.userData.originalOpacity,
+                    originalScale: face.scale ? face.scale.clone() : new THREE.Vector3(1, 1, 1),
+                    originalPosition: face.position ? face.position.clone() : new THREE.Vector3()
+                };
+                
+                // Увеличиваем грань в 2 раза
+                if (face.scale) {
+                    face.scale.multiplyScalar(2);
+                }
+                
+                highlightTimeouts.push(setTimeout(() => {
+                    restoreElement(currentHighlightedElement);
+                    currentHighlightedElement = null;
+                }, HIGHLIGHT_DURATION));
+            }
+        }
+
+        function restoreElement(elementData) {
+            if (!elementData) return;
+            
+            // Отменяем все таймауты
+            clearAllTimeouts();
+            
+            switch(elementData.type) {
+                case 'vertex':
+                    const vertex = vertexObjects.get(elementData.id);
+                    if (vertex) {
+                        // Возвращаем только исходный размер, цвет не меняем
+                        vertex.scale.copy(elementData.originalScale);
+                    }
+                    break;
+                case 'edge':
+                    if (elementData.edgeContainer) {
+                        const edge = elementData.edgeContainer.userData.child;
+                        edge.material.color.setHex(elementData.originalColor);
+                        edge.material.linewidth = elementData.originalLinewidth;
+                        edge.material.needsUpdate = true;
+                        
+                        // Возвращаем исходный масштаб
+                        elementData.edgeContainer.scale.copy(elementData.originalScale);
+                    }
+                    break;
+                case 'face':
+                    const face = faceObjects.get(elementData.id);
+                    if (face) {
+                        // Возвращаем исходный масштаб
+                        if (face.scale && elementData.originalScale) {
+                            face.scale.copy(elementData.originalScale);
+                        }
+                    }
+                    break;
+            }
+            
+            // Убираем подсветку в панели
+            document.querySelectorAll('.element-item.highlighted').forEach(item => {
+                item.classList.remove('highlighted');
+            });
+        }
+
+        // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+        function updateLabels() {
+            vertexLabels.forEach(item => {
+                const screenPos = item.position.clone().project(camera);
+                if (screenPos.z > 0 && screenPos.z < 1) {
+                    const x = (screenPos.x * 0.5 + 0.5) * modalViewerContent.clientWidth;
+                    const y = (-(screenPos.y * 0.5 + 0.5) + 1) * modalViewerContent.clientHeight;
+                    item.element.style.display = 'block';
+                    item.element.style.left = (x - 15) + 'px';
+                    item.element.style.top = (y - 15) + 'px';
+                } else {
+                    item.element.style.display = 'none';
+                }
+            });
+        }
+
+        function onWindowResize() {
+            if (camera && renderer && modalViewerContent.clientWidth > 0 && modalViewerContent.clientHeight > 0) {
+                camera.aspect = modalViewerContent.clientWidth / modalViewerContent.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(modalViewerContent.clientWidth, modalViewerContent.clientHeight);
+            }
+        }
+
+        function cleanupMesh(mesh) {
+            if (!mesh) return;
+            mesh.traverse(child => {
+                if (child.isMesh) {
+                    if (child.geometry) child.geometry.dispose();
+                    if (child.material) {
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach(material => material.dispose());
+                        } else {
+                            child.material.dispose();
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateModelName(name) {
+            const nameElement = document.getElementById('current-model-name');
+            if (nameElement) nameElement.textContent = name;
+        }
+
+        function centerCameraOnObject(object) {
+            const box = new THREE.Box3().setFromObject(object);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            let cameraZ = Math.abs(maxDim / Math.sin(fov / 2)) * 1.5;
+            camera.position.set(center.x, center.y, center.z + cameraZ);
+            controls.target.set(center.x, center.y, center.z);
+            controls.update();
+        }
+
+        function showModalViewer(shapeId) {
+            if (!shapesConfig[shapeId]) return;
+            modalViewer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            if (!scene) init3DViewer();
+            requestAnimationFrame(() => {
+                createShape(shapeId);
+                onWindowResize();
+            });
+        }
+
+        function hideModalViewer() {
+            modalViewer.classList.add('hidden');
+            document.body.style.overflow = '';
+            elementsPanel.classList.add('hidden');
+        }
+
+        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+        function setupEventListeners() {
+            galleryCards.forEach(card => {
+                card.addEventListener('click', () => showModalViewer(card.dataset.shape));
+            });
+            closeModalBtn.addEventListener('click', hideModalViewer);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modalViewer.classList.contains('hidden')) hideModalViewer();
+            });
+            modalViewer.addEventListener('click', (e) => {
+                if (e.target === modalViewer) hideModalViewer();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', setupEventListeners);
+        window.addEventListener('beforeunload', () => {
+            if (renderer) renderer.dispose();
+            cleanupCurrentShape();
+        });
+    </script>
+</body>
+</html>
